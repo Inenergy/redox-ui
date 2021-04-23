@@ -1,16 +1,16 @@
 const { Workbook } = require('excel4node');
 const path = require('path');
-const { getFileDate } = require('./others');
 
 let wb,
   ws,
   fileName,
   headerStyle,
   dataStyle,
+  fileNumber = 1,
   row = 1;
 
 function createFile(name, headers) {
-  fileName = name + getFileDate() + '.xlsx';
+  fileName = `${name}_${fileNumber++}.xlsx`;
   wb = new Workbook();
   ws = wb.addWorksheet('Результаты');
   row = 1;
