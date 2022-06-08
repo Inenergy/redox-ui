@@ -46,6 +46,7 @@
     "trailingComma": "es5"
   },
   "build": {
+    "rebuildDependencies": false,
     "linux": {
       "executableName": "redox-ui",
       "category": "education"
