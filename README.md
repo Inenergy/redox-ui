@@ -47,3 +47,13 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ![gpio](https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png)
 
 Пин 14 использутеся для передачи, пин 15 для приема сигнала.
+
+
+## Тестовый запуск на windows
+
+Установить 12 версию [nodejs](https://nodejs.org/download/release/v12.22.12/)  
+Скачать репозиторий. Щелкнув `Code` -> `Download ZIP` в правом верхнем углу страницы.  
+Распаковать архив и перейти в папку с кодом.  
+Нажать ПКМ+shift и открыть коммандную строку в папке.  
+В коммандной строке ввести `npm i` это установит все необходимые зависимости.  
+После установки зависимостой можно запустить программу в тестовом режиме коммандой `npm run dev`
