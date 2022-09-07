@@ -5,6 +5,31 @@
   export let onChange;
 </script>
 
+<div class="radio-group {type}">
+  {#each group.elements as element}
+    <label>
+      <input
+        class="hidden"
+        type="radio"
+        name={group.name}
+        on:change={onChange}
+        value={element.value}
+        disabled={element.disabled}
+      />
+      <span>
+        {#if element.icon}
+          <img
+            src="../static/icons/{element.icon}.svg"
+            alt={element.icon}
+            class="icon"
+          />
+        {/if}
+        {@html element.label}
+      </span>
+    </label>
+  {/each}
+</div>
+
 <style>
   .radio-group.horizontal {
     display: flex;
@@ -34,26 +59,3 @@
     border-radius: 0 0 4px 4px;
   }
 </style>
-
-<div class="radio-group {type}">
-  {#each group.elements as element}
-    <label>
-      <input
-        class="hidden"
-        type="radio"
-        name={group.name}
-        on:change={onChange}
-        value={element.value}
-        disabled={element.disabled} />
-      <span>
-        {#if element.icon}
-          <img
-            src="../static/icons/{element.icon}.svg"
-            alt={element.icon}
-            class="icon" />
-        {/if}
-        {@html element.label}
-      </span>
-    </label>
-  {/each}
-</div>
