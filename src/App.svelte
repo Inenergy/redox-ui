@@ -4,7 +4,8 @@
   import Version from './atoms/Version';
 </script>
 
+<div class="layout">
   <Settings />
   <Chart />
   <Version />
-
+</div>

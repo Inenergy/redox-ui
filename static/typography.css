@@ -43,3 +43,9 @@
   src: url('./fonts/Oswald/Oswaldlight.woff2');
   font-weight: 300;
 }
+
+@font-face {
+  font-family: 'SimSun';
+  src: url('./fonts/SimSun/SimSun.woff2');
+  font-weight: 400;
+}
