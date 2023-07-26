@@ -29,7 +29,6 @@ const translator = new Translator();
 translator.addMessages('ru', require('../../locale/ru.json'));
 translator.addMessages('en', require('../../locale/en.json'));
 translator.addMessages('cn', require('../../locale/cn.json'));
-// translator.setLocale(process.env.LANG.slice(0, 2));
-translator.setLocale('cn');
+translator.setLocale(process.env.LANG.slice(0, 2));
 
 module.exports = translator;
