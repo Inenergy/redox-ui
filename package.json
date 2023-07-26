@@ -1,6 +1,6 @@
 {
   "name": "redox-ui",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "GUI redox stand",
   "main": "main.js",
   "scripts": {
@@ -47,7 +47,9 @@
   },
   "build": {
     "npmRebuild": false,
+    "compression": "normal",
     "linux": {
+      "target": "AppImage",
       "executableName": "redox-ui",
       "category": "education"
     }
