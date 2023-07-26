@@ -18,6 +18,7 @@
   } from '../stores';
   import { CONNECTION_TYPES, COMMANDS } from '../constants';
   import pointsStorage from '../utils/pointsStorage';
+  import { __ } from '../utils/translations';
 
   onMount(() => {
     chart = new Chart(
@@ -28,13 +29,13 @@
   });
 
   const xOptions = [
-    { label: 'время', value: 0, symbol: 't, c' },
-    { label: 'напряжение', value: 1, symbol: 'U, B' },
+    { label: 'time', value: 0, symbol: 't, s' },
+    { label: 'voltage', value: 1, symbol: 'U, V' },
   ];
 
   const yOptions = [
-    { label: 'ток', value: 2, symbol: 'I, A' },
-    { label: 'напряжение', value: 1, symbol: 'U, B' },
+    { label: 'current', value: 2, symbol: 'I, A' },
+    { label: 'voltage', value: 1, symbol: 'U, V' },
   ];
 
   let saveDisabled = true,
@@ -77,7 +78,7 @@
 
   function startLog() {
     const fileName = 'Redox';
-    const headers = ['Время, с', 'Напряжение, В', 'Ток, А'];
+    const headers = ['Time, s', 'Voltage, V', 'Current, A'];
     ipcRenderer.send('startLog', fileName, headers);
     saveDisabled = false;
   }
@@ -101,10 +102,11 @@
       pointsStorage.rows[pointsStorage.rows.length - 1]
     );
     storedCharge.update(
-      charge => charge + (iv.current * (isCharging ? 1 : -1)) / 3.6
+      (charge) => charge + (iv.current * (isCharging ? 1 : -1)) / 3.6
     );
     storedEnergy.update(
-      energy => energy + (iv.current * iv.voltage * (isCharging ? 1 : -1)) / 3.6
+      (energy) =>
+        energy + (iv.current * iv.voltage * (isCharging ? 1 : -1)) / 3.6
     );
     updateChart();
   }
@@ -113,7 +115,7 @@
     chart.data.datasets[0].data = pointsStorage.points;
     chart.update();
   }
-  
+
   function resetStored() {
     storedCharge.set(0);
     storedEnergy.set(0);
@@ -121,43 +123,45 @@
 </script>
 
 <div class="layout">
-  <header>Построение графиков</header>
+  <header>{$__('charts')}</header>
   <main>
-    <h3>Характеристики редокс батареи</h3>
-    <div class="label">Напряжение, В</div>
+    <h3>{$__('battery characteristics')}</h3>
+    <div class="label">{$__('voltage, V')}</div>
     <div class="long-value">{$IVData.voltage}</div>
-    <div class="label">Ток, А</div>
+    <div class="label">{$__('current, A')}</div>
     <div class="long-value">{$IVData.current}</div>
-    <div class="label">Режим работы</div>
-    <div class="long-value">{$mode ? 'Зарядка' : 'Разрядка'}</div>
-    <div class="label">Тип соединения МЭБ</div>
-    <div class="long-value">{CONNECTION_TYPES[$connectionType]}</div>
-    <div class="short-label">Ось х</div>
+    <div class="label">{$__('mode')}</div>
+    <div class="long-value">{$mode ? $__('charge') : $__('discharge')}</div>
+    <div class="label">{$__('connection type')}</div>
+    <div class="long-value">{$__(CONNECTION_TYPES[$connectionType])}</div>
+    <div class="short-label">{$__('x axis')}</div>
     <Select
       options={xOptions}
       defaultValue={xAxis.value}
       style="grid-column: 2 / 4"
-      onChange={i => (xAxis = xOptions[i])} />
-    <div class="short-label">Ось у</div>
+      onChange={(i) => (xAxis = xOptions[i])}
+    />
+    <div class="short-label">{$__('y axis')}</div>
     <Select
       order={2}
       options={yOptions}
       defaultValue={yAxis.value}
       style="grid-column: 2 / 4"
-      onChange={i => (yAxis = yOptions[+i % 2])} />
+      onChange={(i) => (yAxis = yOptions[+i % 2])}
+    />
     <Button style="grid-area: 6 / 4 / 8 / 6" on:click={toggleDrawing}>
-      {isDrawing ? 'Стоп' : 'Старт'}
+      {isDrawing ? $__('stop') : $__('start')}
     </Button>
-    <div class="long-label">Заряд, мА * ч</div>
+    <div class="long-label">{$__('charge, mA*h')}</div>
     <div class="value">{$storedCharge | 0}</div>
-    <div class="long-label">Запасенная энергия, мВт * ч</div>
+    <div class="long-label">{$__('energy, mW*h')}</div>
     <div class="value">{$storedEnergy | 0}</div>
     <div class="chart">
       <canvas id="chart" height="400" width="520" />
     </div>
   </main>
   <footer>
-    <Button on:click={() => window.scrollTo({ top: 0 })}>Назад</Button>
+    <Button on:click={() => window.scrollTo({ top: 0 })}>{$__('back')}</Button>
     <SaveButton disabled={saveDisabled} />
   </footer>
 </div>

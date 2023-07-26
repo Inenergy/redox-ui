@@ -45,7 +45,7 @@ const CONSTRAINTS = {
   pumpFlow: [200, 350],
 };
 
-CONNECTION_TYPES = ['Последовательное', 'Параллельное'];
+CONNECTION_TYPES = ['series', 'parallel'];
 
 module.exports = {
   IS_RPI,

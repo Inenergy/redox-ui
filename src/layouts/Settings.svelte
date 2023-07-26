@@ -15,21 +15,22 @@
   import { COMMANDS, CONSTRAINTS } from '../constants';
   import { getPowerFromFlow } from '../utils/others';
   import { ipcRenderer } from 'electron';
+  import { __ } from '../utils/translations';
 
   const connectionTypeOptions = [
-    { label: 'последовательное', value: 0 },
-    { label: 'параллельное', value: 1 },
+    { label: 'series', value: 0 },
+    { label: 'parallel', value: 1 },
   ];
 
   const chargingOptions = [
-    { label: 'зарядка постояным током', value: 1 },
-    { label: 'зарядка постояным напряжением', value: 2 },
+    { label: 'constant current', value: 1 },
+    { label: 'constant voltage', value: 2 },
   ];
 
   const dischargingOptions = [
-    { label: 'разрядка на внеш. нагрузке', value: 0 },
-    { label: 'разрядка постояным током', value: 1 },
-    { label: 'разрядка постояным напряжением', value: 2 },
+    { label: 'external load', value: 0 },
+    { label: 'constant current', value: 1 },
+    { label: 'constant voltage', value: 2 },
   ];
 
   const initialState = $stateData;
@@ -80,28 +81,28 @@
 </script>
 
 <div class="layout">
-  <header>Задание рабочих параметров стенда</header>
+  <header>{$__('parameter settings')}</header>
   <main>
-    <div class="label right">Тип соединения МЭБ</div>
+    <div class="label right">{$__('connection type')}</div>
     <Select
       style="grid-column: 5 / 8"
       options={connectionTypeOptions}
       onChange={setConnectionType}
       defaultValue={$connectionType} />
-    <div class="label right">Насосы</div>
+    <div class="label right">{$__('pump')}</div>
     <Toggle
       style="grid-column: 5 / 6"
       on:change={togglePump}
       checked={initialState.pumpPower > 0} />
-    <div class="label right">Подсветка</div>
+    <div class="label right">{$__('backlight')}</div>
     <Toggle
       style="grid-column: 5 / 6"
       on:change={toggleLight}
       checked={initialState.lightingOn} />
     <div class="dbc-label right">
-      Подача насосов
+      {$__('pump flow')}
       <br />
-      мл/мин
+      {$__('ml/min', true)}
     </div>
     <RangeInput
       onChange={setPumpPower}
@@ -109,25 +110,25 @@
       defaultValue={initialState.pumpPower}
       step={10}
       style="grid-area: 2 / 10 / 4 / 12" />
-    <div class="long-label right">Задание режима работы</div>
+    <div class="long-label right">{$__('mode setting')}</div>
     <Switch
       style="grid-column: span 2"
       on:change={toggleMode}
-      off="разрядка"
-      on="зарядка"
+      off="discharge"
+      on="charge"
       checked={$mode} />
-    <div class="long-label right">Характеристики режима работы</div>
+    <div class="long-label right">{$__('mode characteristic')}</div>
     <Select
       defaultValue={loadMode}
       style="grid-column: span 5"
       options={$mode ? chargingOptions : dischargingOptions}
       onChange={setLoadMode} />
     {#if loadMode}
-      <div class="label right">
-        Значение {loadMode === 1 ? 'тока, А' : 'напряжения, В'}
+      <div class="long-label right">
+        {$__(loadMode === 1 ? 'current, A' : 'voltage, V', true)}
       </div>
       <RangeInput
-        style="grid-column: 5 / 7"
+        style="grid-column: span 5"
         step={0.1}
         onChange={setLoad}
         defaultValue={load}
@@ -136,28 +137,29 @@
       <div class="spacer" />
     {/if}
     <div class="labeled-value" style="grid-column: 2 / 8">
-      <span class="label">Заряд, мА * ч</span>
+      <span class="label">{$__('charge, mA*h')}</span>
       <strong class="value">{$storedCharge | 0}</strong>
     </div>
     <div class="labeled-value" style="grid-column: 8 / 12">
-      <span class="label">Напряжение, В</span>
+      <span class="label">{$__('voltage, V')}</span>
       <strong class="value">{$IVData.voltage}</strong>
     </div>
     <div class="labeled-value" style="grid-column: 2 / 8">
-      <span class="label">Запасенная энергия, мВт * ч</span>
+      <span class="label">{$__('energy, mW*h')}</span>
       <strong class="value">{$storedEnergy | 0}</strong>
     </div>
     <div class="labeled-value" style="grid-column: 8 / 12">
-      <span class="label">Ток, А</span>
+      <span class="label">{$__('current, A')}</span>
       <strong class="value">{$IVData.current}</strong>
     </div>
   </main>
   <footer>
     <Button on:click={() => window.scrollTo({ top: window.innerHeight })}>
-      Построение графиков
+      {$__('charts')}
     </Button>
   </footer>
 </div>
+
 
 <style>
   main {

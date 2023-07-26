@@ -1,6 +1,6 @@
-const clone = (obj) => JSON.parse(JSON.stringify(obj));
+exports.clone = (obj) => JSON.parse(JSON.stringify(obj));
 
-const mergeRename = (objects, names) => {
+exports.mergeRename = (objects, names) => {
   const result = {};
   for (let i = 0; i < objects.length; i++) {
     for (let key in objects[i]) {
@@ -10,28 +10,28 @@ const mergeRename = (objects, names) => {
   return result;
 };
 
-const mergeKeysValues = (keys, values) =>
+exports.mergeKeysValues = (keys, values) =>
   keys.reduce((map, key, i) => {
     map[key] = values[i];
     return map;
   }, {});
 
-const capitalize = (s) => s[0].toUpperCase() + s.slice(1);
+exports.capitalize = (s) => s[0].toUpperCase() + s.slice(1);
 
-const getFileDate = () => {
+exports.getFileDate = () => {
   const date = new Date();
   return `${date.getDate()}-${
     date.getMonth() + 1
   }-${date.getFullYear()}_${date.getHours()}-${date.getMinutes()}`;
 };
 
-const countKeys = (obj) => {
+exports.countKeys = (obj) => {
   let n = 0;
   for (let key in obj) n++;
   return n;
 };
 
-const randInt = (min, max) => {
+exports.randInt = (min, max) => {
   if (isNaN(max)) {
     max = min;
     min = 0;
@@ -39,28 +39,27 @@ const randInt = (min, max) => {
   return (Math.random() * (max - min) + min) & 1;
 };
 
-const constraint = (val, [min, max]) => Math.max(min, Math.min(max, val));
+exports.constraint = (val, [min, max]) => Math.max(min, Math.min(max, val));
 
-const getPercentage = (val, [min, max]) =>
+exports.getPercentage = (val, [min, max]) =>
   constraint(Math.round(((val - min) / (max - min)) * 100), [0, 100]);
 
-function debounce(fn, ms) {
-  let timeout;
-  return function () {
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => fn.apply(this, arguments), ms);
-  };
-}
+exports.getNested = (obj, key) =>
+  key
+    .split('.')
+    .reduce(
+      (o, k, i, a) =>
+        Object.is(o[k], void 0) ? (i < a.length - 1 ? {} : o[k]) : o[k],
+      obj
+    );
 
-module.exports = {
-  clone,
-  mergeRename,
-  capitalize,
-  getFileDate,
-  countKeys,
-  randInt,
-  mergeKeysValues,
-  getPercentage,
-  debounce,
-  getPowerFromFlow: (n) => constraint(Math.round(0.0019 * n * n - 0.36 * n), [0, 100]),
+exports.debounce = (fn, ms) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(fn, ms, ...args);
+  };
 };
+
+exports.getPowerFromFlow = (n) =>
+  exports.constraint(Math.round(0.0019 * n * n - 0.36 * n), [0, 100]);

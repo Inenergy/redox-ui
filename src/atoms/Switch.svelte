@@ -1,4 +1,5 @@
 <script>
+  import { __ } from '../utils/translations';
   export let on;
   export let off;
   export let name;
@@ -7,12 +8,12 @@
 </script>
 
 <label {style}>
-  {off}
+  {$__(off, true)}
   <input class="hidden" type="checkbox" {name} bind:checked on:change />
   <span class="track" class:checked>
     <span class="thumb" />
   </span>
-  {on}
+  {$__(on, true)}
 </label>
 
 <style>
