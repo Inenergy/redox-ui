@@ -76,10 +76,16 @@
     subscribeData();
   }
 
+  let fileName = 'redox';
+  let logHeaders = ['time, s', 'voltage, V', 'current, A'];
+
+  __.subscribe((t) => {
+    logHeaders = logHeaders.map(t);
+    // fileName = t(fileName);
+  });
+
   function startLog() {
-    const fileName = 'Redox';
-    const headers = ['Time, s', 'Voltage, V', 'Current, A'];
-    ipcRenderer.send('startLog', fileName, headers);
+    ipcRenderer.send('startLog', fileName, logHeaders);
     saveDisabled = false;
   }
 

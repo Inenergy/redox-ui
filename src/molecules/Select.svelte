@@ -9,6 +9,10 @@
   export let order = 0;
   export let style;
 
+  let placeholder;
+
+  __.subscribe((t) => (placeholder = { label: t('select') }));
+
   onMount(() => document.addEventListener('click', handleClickOutside));
   onDestroy(() => document.removeEventListener('click', handleClickOutside));
 
@@ -16,9 +20,7 @@
     if (optionsVisible && !select.contains(e.target)) optionsVisible = false;
   }
 
-  $: selected = options.find((o) => o.value === defaultValue) || {
-    label: '-- не выбрано --',
-  };
+  $: selected = options.find((o) => o.value === defaultValue) || placeholder;
 
   let optionsVisible = false,
     select;

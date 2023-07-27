@@ -1,6 +1,6 @@
 {
   "name": "redox-ui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "GUI redox stand",
   "main": "main.js",
   "scripts": {

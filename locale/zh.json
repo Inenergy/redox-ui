@@ -1,9 +1,11 @@
 {
+  "redox": "氧化还原",
   "parameter settings": "设置台运行参数",
   "pump": "唧筒",
   "pump flow": "泵流量",
   "backlight": "照明",
   "select": "未选中的",
+  "time, s": "时间，秒",
   "voltage, V": "电压，伏",
   "current, A": "电流，安培",
   "charge, mA*h": "充电，毫安*时",

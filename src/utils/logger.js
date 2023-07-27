@@ -12,7 +12,7 @@ let wb,
 function createFile(name, headers) {
   fileName = `${name}_${fileNumber++}.xlsx`;
   wb = new Workbook();
-  ws = wb.addWorksheet('Результаты');
+  ws = wb.addWorksheet('Results');
   row = 1;
   if (!headerStyle) createStyles();
   for (let i = 0; i < headers.length; i++) {
