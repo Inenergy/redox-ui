@@ -30,6 +30,6 @@ translator.addMessages('ru', require('../../locale/ru.json'));
 translator.addMessages('en', require('../../locale/en.json'));
 translator.addMessages('zh', require('../../locale/zh.json'));
 translator.setLocale(process.env.LANG.slice(0, 2));
-translator.setLocale('zh');
+// translator.setLocale('zh');
 
 module.exports = translator;
